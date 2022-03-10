@@ -9,10 +9,9 @@ int main(void)
     printf("Digite a palavra para saber se é um palindromo: ");
     scanf("%s", &palavra);
 
-    strrev(palavra);
     strcpy(palavracheck, palavra);
-    strrev(palavra);
-
+    strrev(palavracheck);
+    
     if(!strcmp(palavra, palavracheck)){
         printf("É um palindromo\n");
     }else{
