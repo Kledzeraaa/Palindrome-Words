@@ -9,8 +9,6 @@ struct ponteiro
 
 typedef struct ponteiro lista;
 
-struct lista*totiltado;
-
 lista* criarLista(void){
     return NULL;
 }
@@ -30,7 +28,7 @@ int listaVazia(lista* l){
     }
 }
 
-lista* imprimirLista(lista* l){
+void imprimirLista(lista* l){
     if(!listaVazia(l)){
         lista*aux;
         for(aux=l; aux!=NULL; aux=aux->prox){
@@ -86,18 +84,45 @@ int retornarUltimo(lista* l){
     }
 }
 
-lista* concatenarLista(lista* l1, lista* l2){
-    if(!listaVazia(l1)){
+lista* juntarLista(lista *l, lista* l2){
+    lista*aux;
+    lista*aux2;
+    if(!listaVazia(l) && !listaVazia(l2)){
         lista*aux;
-        lista* p;
-        for(aux = l1; aux!=NULL; aux=aux->prox){
-            p=l1;
-            l1=l1->prox;
-        }
-           p->prox=l2;
+        
+    } 
+}
+
+lista* concatenarListas(lista *l, lista* outra){
+    lista *aux = l;
+    if(!listaVazia(l)){
+        while(aux->prox != NULL){
+        aux = aux->prox;
+    }
+        aux->prox = outra; 
+        return l;
     }else{
-        printf("A lista não possue nenhum valor");
-    }  
+        return outra;
+    } 
+}
+
+lista* apagarLista(lista* l){
+    if(!listaVazia(l)){
+        lista*proxno;
+        lista*atualno;
+
+        atualno = l->prox;
+        while(atualno!=NULL){
+            proxno=atualno->prox;
+            free(atualno);
+            atualno=proxno;
+        }
+        free(l);
+        l = criarLista();
+        return l;
+    }else{
+        printf("A lista esta vazia\n");
+    }
 }
 
 int main(){
@@ -107,6 +132,7 @@ int main(){
 
     l1 = insere(l1, 5);
     l1 = insere(l1, 3);
+    l1 = insere(l1, 9);
     l2 = insere(l2, 7);
     l2 = insere(l2, 8);
 
@@ -123,9 +149,11 @@ int main(){
     comprimentoLista(l1);
     printf("====================================\n");
     printf("Lista 01+02:\n");
-    concatenarLista(l1, l2);
+    concatenarListas(l1, l2);
     imprimirLista(l1);
     printf("====================================\n");
-
+    l2 = apagarLista(l2);
+    imprimirLista(l2);
+    printf("====================================\n");
     return 0;
 }
